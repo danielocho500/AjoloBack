@@ -39,6 +39,7 @@ CREATE TABLE Users (
     image_url varchar(200) NOT NULL,
     language_configured VARCHAR(20) NOT NULL,
     enabled bool NOT NULL,
+    rol VARCHAR(50) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

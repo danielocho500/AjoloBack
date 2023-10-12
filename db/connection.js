@@ -1,7 +1,7 @@
 require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("ajoloferia", "root", "1234", {
+const sequelize = new Sequelize("ajoloferia", "root", "mysql", {
   host: "localhost",
   dialect: "mysql",
   logging: false,

@@ -17,15 +17,35 @@ const authLogin = async (req, res) => {
     return responseServerError(res);
   }
 
-  const userfound = await User.findOne({ where: { email, ps: password } });
-  if (userfound) {
-    return responseMsg(res, 401, true, "The credentials are incorrect", {
+  const userfound = await User.findOne({ where: { email } });
+  if (!userfound) {
+    return responseMsg(res, 401, "fail", "The credentials are incorrect", {
       user: userfound,
       logged: true,
     });
-  } else {
+  } 
+
+  const result = checkPassword(password,User.password)
+  if(result){
+    const token = generateJWT(userfound.uuid, userAgent, userIp)
+
+    return responseMsg(res, 200, 'success', "Correct Login", {
+      userInfo: {
+        email: userfound.email,
+        id_rol: userfound.id_rol,
+        user_name: userfound.user_name,
+        coins: userfound.coins,
+        image_url: userfound.image_url,
+        language_configured: userfound.language_configured
+      },
+      registered: true,
+      token,
+    });
+  }
+  else{
     return responseMsg(res, 401, true, "The credentials are incorrect", {
-      logged: false,
+      user: userfound,
+      logged: true,
     });
   }
 };

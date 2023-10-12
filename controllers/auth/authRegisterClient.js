@@ -6,9 +6,9 @@ const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
 const { generateJWT } = require("../../jwt/generateJWT");
 
-const authRegister = async (req, res) => {
-  console.log("POST register");
-  const { email, password, username, rol } = req.body;
+const authRegisterClient = async (req, res) => {
+  console.log("POST register client");
+  const { email, password, username } = req.body;
   const { userAgent, userIp } = getRequestData(req);
 
   const isConnected = await verifyConnection();
@@ -26,12 +26,19 @@ const authRegister = async (req, res) => {
   }
 
   try {
-    const user = await createUser(password, email, username, rol);
+    const user = await createUser(password, email, username, 1);
 
     const token = await generateJWT(user.uuid, userAgent, userIp);
 
-    return responseMsg(res, 200, true, "User registered", {
-      user: user,
+    return responseMsg(res, 200, 'success', "User registered", {
+      userInfo: {
+        email: user.email,
+        id_rol: user.id_rol,
+        user_name: user.user_name,
+        coins: user.coins,
+        image_url: user.image_url,
+        language_configured: user.language_configured
+      },
       registered: true,
       token,
     });
@@ -42,5 +49,6 @@ const authRegister = async (req, res) => {
 };
 
 module.exports = {
-  authRegister,
+  authRegisterClient,
+  
 };

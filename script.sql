@@ -32,6 +32,7 @@ CREATE TABLE PaymentMethods (
 
 CREATE TABLE Users (
     uuid VARCHAR(100) PRIMARY KEY NOT NULL,
+    id_rol int NOT NULL,
     email VARCHAR(100) NOT NULL,
     ps VARCHAR(150) NOT NULL,
     user_name VARCHAR(50) NOT NULL,
@@ -39,9 +40,9 @@ CREATE TABLE Users (
     image_url varchar(200) NOT NULL,
     language_configured VARCHAR(20) NOT NULL,
     enabled bool NOT NULL,
-    rol VARCHAR(50) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_rol) REFERENCES Roles(id)
 );
 
 CREATE TABLE CreditCards (

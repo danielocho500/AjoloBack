@@ -35,7 +35,7 @@ const User = sequelize.define("user", {
     type: DataTypes.TINYINT(1),
     allowNull: false,
   },
-  rol: {
+  id_rol: {
     type: DataTypes.STRING(50),
     allowNull: false,
   },

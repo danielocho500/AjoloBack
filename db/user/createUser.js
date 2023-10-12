@@ -8,6 +8,7 @@ const createUser = async (password, email, username, rol) => {
 
   const user = await User.create({
     uuid: uuid,
+    id_rol: rol,
     email: email,
     ps: hashedPass,
     user_name: username,
@@ -15,7 +16,6 @@ const createUser = async (password, email, username, rol) => {
     image_url: "undefined",
     language_configured: "undefined",
     enabled: 1,
-    rol: rol,
     createdAt: new Date().getTime(),
     updatedAt: new Date().getTime(),
   });

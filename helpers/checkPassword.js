@@ -1,11 +1,17 @@
 const bcrypt = require('bcrypt');
 
-const checkPassword = async (pass, hash) => new Promise((res) => {
-    bcrypt.compare(pass, hash, (err, result) => {
-        res(result);
+function checkPassword(password, hash) {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, hash, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
     });
-});
+  }
 
 module.exports = {
-    checkPassword,
+    checkPassword
 };

@@ -210,3 +210,8 @@ CREATE TABLE BuyGets (
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_offer) REFERENCES OfferStalls(id)
 );
+
+INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT', NOW(), NOW());
+INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());
+INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (3, 'EMPLOYEER', NOW(), NOW());
+INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (4, 'STALLEMPLOYEER', NOW(), NOW());

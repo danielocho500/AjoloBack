@@ -6,6 +6,7 @@ const { authRegisterUser } = require("../controllers/auth/authRegisterUser")
 const { authUpdate } = require("../controllers/auth/authUpdate");
 const { authDelete } = require("../controllers/auth/authDelete");
 const { validateParams } = require("../helpers/validateParams");
+const { validateJWT } = require("../jwt/validateJWT");
 
 const router = Router();
 router.post(
@@ -36,12 +37,13 @@ router.post(
     check("username", "You should include a username").notEmpty(),
     check("password", "You should include a password").notEmpty(),
     check("id_rol","You should include the id of the new user rol").notEmpty().isAlphanumeric().custom((value) => {
-      if (value !== "3" && value !== "4") {
+      if (value !== 3 && value !== 4) {
         throw new Error("id_rol must be 3 for Employeer or 4 for Attendant");
       }
       return true;
     }),
     validateParams,
+    validateJWT
   ],
   authRegisterUser
 );

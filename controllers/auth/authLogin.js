@@ -20,15 +20,14 @@ const authLogin = async (req, res) => {
   const userfound = await User.findOne({ where: { email } });
   if (!userfound) {
     return responseMsg(res, 401, "fail", "The credentials are incorrect", {
-      user: userfound,
-      logged: true,
+      logged: false,
     });
   } 
 
-  const result = checkPassword(password,User.password)
+  const result = await checkPassword(password, userfound.ps)
   if(result){
-    const token = generateJWT(userfound.uuid, userAgent, userIp)
-
+    const token = await generateJWT(userfound.uuid, userAgent, userIp)
+    console.log("correct login")
     return responseMsg(res, 200, 'success', "Correct Login", {
       userInfo: {
         email: userfound.email,
@@ -43,9 +42,9 @@ const authLogin = async (req, res) => {
     });
   }
   else{
+    console.log("incorrect login :C")
     return responseMsg(res, 401, true, "The credentials are incorrect", {
-      user: userfound,
-      logged: true,
+      logged: false,
     });
   }
 };

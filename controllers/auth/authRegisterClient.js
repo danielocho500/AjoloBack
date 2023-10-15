@@ -8,7 +8,7 @@ const { generateJWT } = require("../../jwt/generateJWT");
 
 const authRegisterClient = async (req, res) => {
   console.log("POST register client");
-  const { email, password, username } = req.body;
+  const { email, password, username, rol } = req.body;
   const { userAgent, userIp } = getRequestData(req);
 
   const isConnected = await verifyConnection();
@@ -26,12 +26,13 @@ const authRegisterClient = async (req, res) => {
   }
 
   try {
-    const user = await createUser(password, email, username, 1);
+    const user = await createUser(password, email, username, rol);
 
     const token = await generateJWT(user.uuid, userAgent, userIp);
 
     return responseMsg(res, 200, 'success', "User registered", {
       userInfo: {
+        uuid: user.uuid,
         email: user.email,
         id_rol: user.id_rol,
         user_name: user.user_name,
@@ -50,5 +51,5 @@ const authRegisterClient = async (req, res) => {
 
 module.exports = {
   authRegisterClient,
-  
+
 };

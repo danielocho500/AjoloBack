@@ -22,14 +22,15 @@ const authLogin = async (req, res) => {
     return responseMsg(res, 401, "fail", "The credentials are incorrect", {
       logged: false,
     });
-  } 
+  }
 
   const result = await checkPassword(password, userfound.ps)
-  if(result){
-    const token = await generateJWT(userfound.uuid, userAgent, userIp)
+  if (result) {
+    const token = await generateJWT(userfound.uuid, userAgent, userIp, userfound.id_rol)
     console.log("correct login")
     return responseMsg(res, 200, 'success', "Correct Login", {
       userInfo: {
+        uuid: userfound.uuid,
         email: userfound.email,
         id_rol: userfound.id_rol,
         user_name: userfound.user_name,
@@ -41,7 +42,7 @@ const authLogin = async (req, res) => {
       token,
     });
   }
-  else{
+  else {
     console.log("incorrect login :C")
     return responseMsg(res, 401, true, "The credentials are incorrect", {
       logged: false,

@@ -7,7 +7,7 @@ const { responseServerError } = require("../../helpers/responseServerError");
 const { generateJWT } = require("../../jwt/generateJWT");
 
 const authDelete = async (req, res) => {
-  console.log("PUT register");
+  console.log("DELETE Method");
   const { uuid } = req.body;
 
   const isConnected = await verifyConnection();
@@ -20,7 +20,7 @@ const authDelete = async (req, res) => {
   try {
     const user = await deleteUser(uuid);
 
-    return responseMsg(res, 200, true, "User disabled", {
+    return responseMsg(res, 200, 'success', "User disabled", {
       user: user,
       updated: true,
     });

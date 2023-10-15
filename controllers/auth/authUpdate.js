@@ -4,10 +4,10 @@ const { verifyConnection } = require("../../db/verifyConnection");
 const { getRequestData } = require("../../helpers/getRequestData");
 const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
-const { generateJWT } = require("../../jwt/generateJWT");
+const { validateJWT } = require("../../jwt/validateJWT");
 
 const authUpdate = async (req, res) => {
-  console.log("PUT register");
+  
   const {
     uuid,
     email,
@@ -47,7 +47,7 @@ const authUpdate = async (req, res) => {
       rol
     );
 
-    return responseMsg(res, 200, true, "User updated", {
+    return responseMsg(res, 200, 'success', "User updated", {
       user: user,
       updated: true,
     });

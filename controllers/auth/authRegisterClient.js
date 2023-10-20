@@ -8,6 +8,7 @@ const { generateJWT } = require("../../jwt/generateJWT");
 
 const authRegisterClient = async (req, res) => {
   console.log("POST register client");
+  
   const { email, password, username, rol } = req.body;
   const { userAgent, userIp } = getRequestData(req);
 

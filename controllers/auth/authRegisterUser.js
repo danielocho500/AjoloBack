@@ -3,15 +3,28 @@ const { emailExists } = require("../../db/user/emailExists");
 const { verifyConnection } = require("../../db/verifyConnection");
 const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
+const { getUidByToken } = require("../../jwt/getUidByToken")
+const { getRoleByUuid } = require("../../db/user/getRoleByUuid")
+const { ROLES } = require("../../helpers/RolesEnum")
 const { generateJWT } = require("../../jwt/generateJWT");
 
 const authRegisterUser = async (req, res) => {
 
     const { email, password, username, id_rol } = req.body;
+    const token = req.header('authToken');
 
     const isConnected = await verifyConnection();
     if (!isConnected) {
         return responseMsg(res, 500, "error", "internal server error", {
+            registered: false,
+        });
+    }
+
+    const uuid = await getUidByToken(token)
+    const role = await getRoleByUuid(uuid);
+
+    if(role != ROLES.ADMIN){
+        return responseMsg(res, 501, "fail", "Not Authorized", {
             registered: false,
         });
     }

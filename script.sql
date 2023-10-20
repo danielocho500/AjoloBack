@@ -215,3 +215,5 @@ INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT
 INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());
 INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (3, 'EMPLOYEER', NOW(), NOW());
 INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (4, 'STALLEMPLOYEER', NOW(), NOW());
+
+INSERT INTO USERS (uuid, id_rol, email, ps, user_name, coins, image_url, language_configured, enabled, createdAt, updatedAt) VALUES ('a133a4ac-25ce-4e18-9943-e6897f4d1c3d', 2, 'paponcio@gmail.com', '$2b$10$ZUP5Jo4344Oifn0yPGAT2eQPSslozoJWiIlnBAngVTmHqPZNAh6c2', 'Patron', 0, '', '', true, NOW(), NOW());

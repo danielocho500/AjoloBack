@@ -1,20 +1,28 @@
 const { Router } = require("express");
-const { check } = require("express-validator");
-const { authLogin } = require("../controllers/auth/authLogin");
-const { authRegisterClient } = require("../controllers/auth/authRegisterClient");
-const { authRegisterUser } = require("../controllers/auth/authRegisterUser")
-const { authUpdate } = require("../controllers/auth/authUpdate");
-const { authDelete } = require("../controllers/auth/authDelete");
 const { validateParams } = require("../helpers/validateParams");
 const { validateJWT } = require("../jwt/validateJWT");
+const { generateQRCode } = require("../controllers/qr/qrGenerate")
+const { validateQr } = require("../controllers/qr/qrValidate");
+const { check } = require("express-validator");
 
 const router = Router();
 router.get(
   "/generate",
   [
     validateParams,
+    validateJWT
   ],
-  authLogin
+  generateQRCode
+);
+
+router.get(
+  "/validate",
+  [
+    check("code_qr", "You should the code of the qr").notEmpty(),
+    validateParams,
+    validateJWT
+  ],
+  validateQr
 );
 
 module.exports = router;

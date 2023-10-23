@@ -6,13 +6,14 @@ const Qrcodes = sequelize.define("qrcodes", {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
   uuid: {
-    type: DataTypes.VARCHAR(100),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   code_qr: {
-    type: DataTypes.VARCHAR(29),
+    type: DataTypes.STRING(29),
     allowNull: false,
   },
   expiration_time: {

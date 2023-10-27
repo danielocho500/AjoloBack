@@ -2,35 +2,35 @@ DROP DATABASE IF EXISTS ajoloferia;
 CREATE DATABASE ajoloferia;
 USE ajoloferia;
 
-CREATE TABLE Roles (
+CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE StallTypes (
+CREATE TABLE stallTypes (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE WeekDays (
+CREATE TABLE weekDays (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE PaymentMethods (
+CREATE TABLE paymentMethods (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Users (
+CREATE TABLE users (
     uuid VARCHAR(100) PRIMARY KEY NOT NULL,
     id_rol int NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -42,11 +42,12 @@ CREATE TABLE Users (
     enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_rol) REFERENCES Roles(id)
+    FOREIGN KEY (id_rol) REFERENCES roles(id)
 );
 
-CREATE TABLE CreditCards (
+CREATE TABLE creditCards (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    uuid_client VARCHAR(100) NOT NULL,
     card_number varchar(20) NOT NULL,
     card_holder varchar(100) NOT NULL,
     card_expiration_month datetime NOT NULL,
@@ -54,17 +55,18 @@ CREATE TABLE CreditCards (
     normalized_name VARCHAR(100) NOT NULL,
     enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (uuid_client) REFERENCES users(uuid)
 );
 
-CREATE TABLE CouponTypes (
+CREATE TABLE couponTypes (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Coupons (
+CREATE TABLE coupons (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_coupon_type int NOT NULL,
     code_coupon varchar(20) NOT NULL,
@@ -75,10 +77,10 @@ CREATE TABLE Coupons (
     total_uses int NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (id_coupon_type) REFERENCES CouponTypes(id)
+	FOREIGN KEY (id_coupon_type) REFERENCES couponTypes(id)
 );
 
-CREATE TABLE ShopCoins (
+CREATE TABLE shopCoins (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     uuid_client VARCHAR(100) NOT NULL,
     uuid_employeer VARCHAR(100) NOT NULL,
@@ -88,24 +90,24 @@ CREATE TABLE ShopCoins (
     cost double NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (uuid_client) REFERENCES Users(uuid),
-    FOREIGN KEY (uuid_employeer) REFERENCES Users(uuid),
-	FOREIGN KEY (id_payment_method) REFERENCES PaymentMethods(id),
-	FOREIGN KEY (id_credit_card) REFERENCES CreditCards(id),
-	FOREIGN KEY (id_coupon) REFERENCES Coupons(id)
+	FOREIGN KEY (uuid_client) REFERENCES users(uuid),
+    FOREIGN KEY (uuid_employeer) REFERENCES users(uuid),
+	FOREIGN KEY (id_payment_method) REFERENCES paymentMethods(id),
+	FOREIGN KEY (id_credit_card) REFERENCES creditCards(id),
+	FOREIGN KEY (id_coupon) REFERENCES coupons(id)
 );
 
-CREATE TABLE QrCodes (
+CREATE TABLE qrCodes (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     uuid VARCHAR(100) NOT NULL,
     code_qr varchar(20) NOT NULL,
     expiration_time TIMESTAMP NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (uuid) REFERENCES Users(uuid)
+	FOREIGN KEY (uuid) REFERENCES users(uuid)
 );
 
-CREATE TABLE Stalls (
+CREATE TABLE stalls (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall_type int NOT NULL,
     name varchar(100) NOT NULL,
@@ -116,10 +118,10 @@ CREATE TABLE Stalls (
     enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall_type) REFERENCES StallTypes(id)
+    FOREIGN KEY (id_stall_type) REFERENCES stallTypes(id)
 );
 
-CREATE TABLE Schedubles (
+CREATE TABLE schedubles (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     id_week_day int NOT NULL,
@@ -127,11 +129,11 @@ CREATE TABLE Schedubles (
     end_time time NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall) REFERENCES Stalls(id),
-    FOREIGN KEY (id_week_day) REFERENCES WeekDays(id)
+    FOREIGN KEY (id_stall) REFERENCES stalls(id),
+    FOREIGN KEY (id_week_day) REFERENCES weekDays(id)
 );
 
-CREATE TABLE EventDates (
+CREATE TABLE eventDates (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     event_date datetime NOT NULL,
@@ -139,21 +141,21 @@ CREATE TABLE EventDates (
     duration_minutes double NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall) REFERENCES Stalls(id)
+    FOREIGN KEY (id_stall) REFERENCES stalls(id)
 );
 
-CREATE TABLE UserStalls (
+CREATE TABLE userStalls (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     uuid VARCHAR(100) NOT NULL,
     description varchar(255) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall) REFERENCES Stalls(id),
-    FOREIGN KEY (uuid) REFERENCES Users(uuid)
+    FOREIGN KEY (id_stall) REFERENCES stalls(id),
+    FOREIGN KEY (uuid) REFERENCES users(uuid)
 );
 
-CREATE TABLE ReviewStalls (
+CREATE TABLE reviewStalls (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     uuid VARCHAR(100) NOT NULL,
@@ -163,22 +165,22 @@ CREATE TABLE ReviewStalls (
     enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall) REFERENCES Stalls(id),
-    FOREIGN KEY (uuid) REFERENCES Users(uuid)
+    FOREIGN KEY (id_stall) REFERENCES stalls(id),
+    FOREIGN KEY (uuid) REFERENCES users(uuid)
 );
 
-CREATE TABLE Tickets (
+CREATE TABLE tickets (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     uuid_client VARCHAR(100) NOT NULL,
     uuid_employeer VARCHAR(100) NOT NULL,
     cost int NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (uuid_client) REFERENCES Users(uuid),
-    FOREIGN KEY (uuid_employeer) REFERENCES Users(uuid)
+	FOREIGN KEY (uuid_client) REFERENCES users(uuid),
+    FOREIGN KEY (uuid_employeer) REFERENCES users(uuid)
 );
 
-CREATE TABLE OfferStalls (
+CREATE TABLE offerStalls (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     id_ticket int NOT NULL,
@@ -188,32 +190,35 @@ CREATE TABLE OfferStalls (
     enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_stall) REFERENCES Stalls(id),
-    FOREIGN KEY (id_ticket) REFERENCES Tickets(id)
+    FOREIGN KEY (id_stall) REFERENCES stalls(id),
+    FOREIGN KEY (id_ticket) REFERENCES tickets(id)
 );
 
-CREATE TABLE CostLessTickets (
+CREATE TABLE costLessTickets (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_offer int NOT NULL,
     cost_per_person double NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_offer) REFERENCES OfferStalls(id)
+    FOREIGN KEY (id_offer) REFERENCES offerStalls(id)
 );
 
-CREATE TABLE BuyGets (
+CREATE TABLE buyGets (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_offer int NOT NULL,
     amount_buyed double NOT NULL,
     amount_Getted double NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_offer) REFERENCES OfferStalls(id)
+    FOREIGN KEY (id_offer) REFERENCES offerStalls(id)
 );
 
-INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT', NOW(), NOW());
-INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());
-INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (3, 'EMPLOYEER', NOW(), NOW());
-INSERT INTO ROLES (id, normalized_name, createdAt, updatedAt) VALUES (4, 'STALLEMPLOYEER', NOW(), NOW());
+INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT', NOW(), NOW());
+INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());
+INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (3, 'EMPLOYEER', NOW(), NOW());
+INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (4, 'STALLEMPLOYEER', NOW(), NOW());
 
-INSERT INTO USERS (uuid, id_rol, email, ps, user_name, coins, image_url, language_configured, enabled, createdAt, updatedAt) VALUES ('a133a4ac-25ce-4e18-9943-e6897f4d1c3d', 2, 'paponcio@gmail.com', '$2b$10$ZUP5Jo4344Oifn0yPGAT2eQPSslozoJWiIlnBAngVTmHqPZNAh6c2', 'Patron', 0, '', '', true, NOW(), NOW());
+INSERT INTO users (uuid, id_rol, email, ps, user_name, coins, image_url, language_configured, enabled, createdAt, updatedAt) VALUES ('a133a4ac-25ce-4e18-9943-e6897f4d1c3d', 2, 'paponcio@gmail.com', '$2b$10$ZUP5Jo4344Oifn0yPGAT2eQPSslozoJWiIlnBAngVTmHqPZNAh6c2', 'Patron', 0, '', '', true, NOW(), NOW());
+
+INSERT INTO stallTypes (id, normalized_name, createdAt, updatedAt) VALUES (1, 'EVENT', NOW(), NOW());
+INSERT INTO stallTypes (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ATTRACTION', NOW(), NOW());

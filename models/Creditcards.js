@@ -7,6 +7,10 @@ const Creditcards = sequelize.define("creditcards", {
     allowNull: false,
     primaryKey: true,
   },
+  uuid:{
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   card_number: {
     type: DataTypes.VARCHAR(20),
     allowNull: false,

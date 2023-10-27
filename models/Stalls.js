@@ -6,8 +6,9 @@ const Stalls = sequelize.define("stalls", {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
-  id_stall: {
+  id_stall_type: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

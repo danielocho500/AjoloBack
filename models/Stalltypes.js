@@ -1,14 +1,14 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Stalltypes = sequelize.define("stalltypes", {
+const Stalltypes = sequelize.define("stallTypes", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
   normalized_name: {
-    type: DataTypes.VARCHAR(100),
+    type: DataTypes.STRING,
     allowNull: false,
   },
   createdAt: {

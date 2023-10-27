@@ -2,12 +2,16 @@ const { verifyConnection } = require("../../db/verifyConnection");
 const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
 const { getUidByToken } = require("../../jwt/getUidByToken");
-const {createQR} = require("../../db/qr/createqr");
+const { getStallsInfo } = require("../../db/stall/getStalls")
 const User = require("../../models/User");
+const Stall = require("../../models/Stalls")
+const Userstalls = require("../../models/Userstalls");
 
-const generateQRCode = async (req, res) => {
-  console.log("GET QR");
+const getStalls = async (req, res) => {
+  console.log("GET Stall");
 
+  const { query } = req.query;
+  
   const isConnected = await verifyConnection();
   if (!isConnected) {
     return responseServerError(res);
@@ -18,27 +22,17 @@ const generateQRCode = async (req, res) => {
   const user = await User.findOne({ where: { uuid } });
   if (!user) {
     return responseMsg(res, 401, "fail", "Not user Found", {
-      qrCode: false,
+    
     });
   }
 
-  if(user.id_rol != 1){
-    return responseMsg(res, 401, "fail", "Not authorized to create QR Codes", {
-        logged: false,
-      });
-  }
+  const stalls = await getStallsInfo(user, query);
 
-  const qrCode = await createQR(uuid)
-
-  if(qrCode == -1){
-    return responseServerError(res)
-  }
-
-  return responseMsg(res, 200, 'success', 'QRCreated', {
-    qrCode,
-  })
+  return responseMsg(res, 200, "Success", "Stalls obtained", {
+    stalls
+  });
 };
 
 module.exports = {
-  generateQRCode,
+    getStalls,
 };

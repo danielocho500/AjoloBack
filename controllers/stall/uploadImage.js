@@ -30,6 +30,7 @@ const multerUpload = multer({
 
 const uploadImage = async (req, res) => {
   console.log("Upload Image Stall");
+  console.log(__dirname)
 
   let { idStall } = req.params;
   idStall = parseInt(idStall);

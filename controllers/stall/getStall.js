@@ -1,38 +1,38 @@
 const { verifyConnection } = require("../../db/verifyConnection");
 const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
-const { getUidByToken } = require("../../jwt/getUidByToken");
-const { getStallsInfo } = require("../../db/stall/getStalls")
-const User = require("../../models/User");
-const Stall = require("../../models/Stalls")
-const Userstalls = require("../../models/Userstalls");
+const Stalls = require("../../models/Stalls")
 
-const getStalls = async (req, res) => {
+const getStall = async (req, res) => {
   console.log("GET Stall");
 
-  const { query } = req.query;
+  let { idStall } = req.params;
+  idStall = parseInt(idStall);
+
+  if (isNaN(idStall) || !Number.isInteger(idStall) || idStall < 0) {
+    return responseMsg(res, 400, 'Fail', "the idStall should be an integer", {});
+  }
   
   const isConnected = await verifyConnection();
   if (!isConnected) {
     return responseServerError(res);
   }
 
-  const uuid = getUidByToken(req.headers.authtoken);
+  const stall = await Stalls.findOne({where: { id: idStall }})
 
-  const user = await User.findOne({ where: { uuid } });
-  if (!user) {
-    return responseMsg(res, 401, "fail", "Not user Found", {
-    
+  if(!stall){
+    return responseMsg(res, 400, "Fail", "Not valid Stall id", {
+      stall
     });
   }
 
-  const stalls = await getStallsInfo(user, query);
+  console.log(stall)
 
-  return responseMsg(res, 200, "Success", "Stalls obtained", {
-    stalls
+  return responseMsg(res, 200, "Success", "Stall obtained", {
+    stall
   });
 };
 
 module.exports = {
-    getStalls,
+    getStall,
 };

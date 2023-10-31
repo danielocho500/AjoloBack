@@ -4,7 +4,9 @@ const { validateJWT } = require("../jwt/validateJWT");
 const { check } = require("express-validator");
 const { getStallTypes } = require("../controllers/stall/getStallTypes");
 const { createStall } = require("../controllers/stall/createStall");
-const { getStalls } = require("../controllers/stall/getStall");
+const { getStalls } = require("../controllers/stall/getStalls");
+const { getStall } = require("../controllers/stall/getStall");
+const { uploadImage } = require("../controllers/stall/uploadImage");
 
 const router = Router();
 router.post(
@@ -23,7 +25,7 @@ router.post(
 );
 
 router.get(
-    "/stallTypes",
+    "/types",
     [
         validateParams,
         validateJWT
@@ -32,14 +34,30 @@ router.get(
 )
 
 router.get(
-    "/stalls",
+    "/",
     [
-        check("uuid_employeer"),
         validateParams,
         validateJWT
     ],
     getStalls
 )
 
+router.get(
+  "/:idStall",
+  [
+    validateParams,
+    validateJWT
+  ],
+  getStall
+)
+
+router.post(
+  "/image/:idStall",
+  [
+    validateParams,
+    validateJWT
+  ],
+  uploadImage
+);
 
 module.exports = router;

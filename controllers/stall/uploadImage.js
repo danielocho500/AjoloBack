@@ -49,8 +49,7 @@ const uploadImage = async (req, res) => {
     return responseServerError(res);
   }
 
-  const kpd = multerUpload.single('file');
-  console.log(kpd)
+  
 
   multerUpload.single('file')(req, res, async function (err) {
         if (err instanceof multer.MulterError) {
@@ -59,6 +58,8 @@ const uploadImage = async (req, res) => {
             return responseMsg(res, 500, 'Fail', "Error interno del servidor", {});
         }
 
+        stall.image_url = req.file.path
+        await stall.save()
         // En este punto, la carga del archivo se ha completado con éxito
         return responseMsg(res, 200, "Success", "Imagen subida exitosamente", {
             file: req.file.path

@@ -16,7 +16,7 @@ const validateJWT = async (req, res, next) => {
         const { userAgent: userAgentToken, userIp: userIpToken } = jwt.verify(token, process.env.SECRET_KEY);
         const { userAgent, userIp } = getRequestData(req);
 
-        if (userAgent === userAgentToken && userIp === userIpToken) {
+        if (userAgent === userAgentToken) {
             next();
         } else {
             return res.status(401).json({

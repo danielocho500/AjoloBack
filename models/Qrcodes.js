@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Qrcodes = sequelize.define("qrcodes", {
+const Qrcodes = sequelize.define("qrCodes", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,

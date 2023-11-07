@@ -1,3 +1,4 @@
+const multer  = require('multer')
 const { Router } = require("express");
 const { validateParams } = require("../helpers/validateParams");
 const { validateJWT } = require("../jwt/validateJWT");
@@ -7,6 +8,9 @@ const { createStall } = require("../controllers/stall/createStall");
 const { getStalls } = require("../controllers/stall/getStalls");
 const { getStall } = require("../controllers/stall/getStall");
 const { uploadImage } = require("../controllers/stall/uploadImage");
+
+
+const upload = multer({ storage: multer.memoryStorage() });
 
 const router = Router();
 router.post(
@@ -55,7 +59,8 @@ router.post(
   "/image/:idStall",
   [
     validateParams,
-    validateJWT
+    validateJWT,
+    upload.single('file')
   ],
   uploadImage
 );

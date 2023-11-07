@@ -24,7 +24,7 @@ const User = sequelize.define("user", {
     allowNull: false,
   },
   image_url: {
-    type: DataTypes.STRING(200),
+    type: DataTypes.STRING(2000),
     allowNull: false,
   },
   language_configured: {

@@ -26,8 +26,6 @@ const getStall = async (req, res) => {
     });
   }
 
-  console.log(stall)
-
   return responseMsg(res, 200, "Success", "Stall obtained", {
     stall
   });

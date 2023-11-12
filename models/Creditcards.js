@@ -1,34 +1,35 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Creditcards = sequelize.define("creditcards", {
+const Creditcards = sequelize.define("creditCards", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
-  uuid:{
-    type: DataTypes.STRING,
+  uuid_client:{
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   card_number: {
-    type: DataTypes.VARCHAR(20),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   card_holder: {
-    type: DataTypes.VARCHAR(100),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   card_expiration_month: {
-    type: DataTypes.DATE,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   card_expiration_year: {
-    type: DataTypes.DATE,
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   normalized_name: {
-    type: DataTypes.VARCHAR(100),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   enabled: {

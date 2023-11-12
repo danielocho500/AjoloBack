@@ -50,7 +50,7 @@ CREATE TABLE creditCards (
     uuid_client VARCHAR(100) NOT NULL,
     card_number varchar(20) NOT NULL,
     card_holder varchar(100) NOT NULL,
-    card_expiration_month datetime NOT NULL,
+    card_expiration_month int NOT NULL,
     card_expiration_year int NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
     enabled bool NOT NULL,

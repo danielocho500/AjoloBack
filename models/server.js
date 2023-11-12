@@ -14,6 +14,7 @@ class Server {
         this.qrPath = '/api/qr';
         this.usersPath = '/api/users'
         this.stallPath = '/api/stalls'
+        this.paymentPath = '/api/payment'
 
         this.middlewares();
 
@@ -31,7 +32,8 @@ class Server {
         this.app.use(this.qrPath, require('../routes/qr'));
         this.app.use(this.authPath, require('../routes/auth'));
         this.app.use(this.usersPath, require('../routes/users'));
-        this.app.use(this.stallPath, require('../routes/stall'))
+        this.app.use(this.stallPath, require('../routes/stall'));
+        this.app.use(this.paymentPath, require('../routes/payment'));
     }
 
     listen() {

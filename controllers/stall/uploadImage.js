@@ -6,6 +6,10 @@ const {extname, join } = require('path');
 
 const Stalls = require("../../models/Stalls")
 
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://ajoloback-production.up.railway.app' // Reemplaza con la URL de producción
+  : 'http://localhost:8080'
+
 const UPLOADS_DIRECTORY = join(__dirname, '../../uploads');
 const MIMETYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 
@@ -59,9 +63,10 @@ const uploadImage = async (req, res) => {
             return responseMsg(res, 500, 'Fail', "Error interno del servidor", {});
         }
 
-        stall.image_url = req.file.path
-        await stall.save()
-        // En este punto, la carga del archivo se ha completado con éxito
+        const fileUrl = `${baseUrl}${req.file.path.replace(/\\/g, '/')}`;
+        stall.image_url = fileUrl;
+        await stall.save();
+        console.log(fileUrl);
         return responseMsg(res, 200, "Success", "Imagen subida exitosamente", {
             file: req.file.path
         });

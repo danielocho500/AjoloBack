@@ -31,11 +31,12 @@ const getCard = async (req, res) => {
   const card = await Card.findOne({ where: { uuid_client: uuid }})
 
   if(card){
-    return responseMsg(res, 200, 'success', 'Updated Card', {
+    return responseMsg(res, 200, 'success', 'Card', {
+        cardExist: true,
         card
     });
   }
-  return responseMsg(res, 200, 'success', 'No credit Card registered', {})
+  return responseMsg(res, 200, 'success', 'No credit Card registered', { cardExist: false })
 };
 
 module.exports = {

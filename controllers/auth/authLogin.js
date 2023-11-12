@@ -28,6 +28,7 @@ const authLogin = async (req, res) => {
   if (result) {
     const token = await generateJWT(userfound.uuid, userAgent, userIp, userfound.id_rol)
     console.log("correct login")
+    console.log(token)
     return responseMsg(res, 200, 'success', "Correct Login", {
       userInfo: {
         uuid: userfound.uuid,

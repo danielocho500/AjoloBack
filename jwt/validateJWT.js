@@ -4,7 +4,6 @@ require('dotenv').config();
 
 const validateJWT = async (req, res, next) => {
     const token = req.header('authToken');
-    console.log('el token es: ', token)
 
     if (!token) {
         return res.status(401).json({
@@ -30,8 +29,7 @@ const validateJWT = async (req, res, next) => {
         return res.status(401).json({
             ok: false,
             msg: 'No valid Token',
-        });
-        
+        });   
     }
 };
 

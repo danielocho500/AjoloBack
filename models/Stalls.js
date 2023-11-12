@@ -21,7 +21,7 @@ const Stalls = sequelize.define("stalls", {
     allowNull: false,
   },
   image_url: {
-    type: DataTypes.STRING(100),
+    type: DataTypes.STRING,
     allowNull: false,
   },
   cost: {

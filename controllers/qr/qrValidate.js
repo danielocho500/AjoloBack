@@ -25,12 +25,6 @@ const validateQr = async (req, res) => {
     });
   }
 
-  if(user.id_rol != 4){
-    return responseMsg(res, 401, "fail", "Not authorized to validate QR Codes", {
-        valid: false,
-      });
-  }
-
   const qrCode = await Qr.findOne({ where: { code_qr }})
 
   if(!qrCode){

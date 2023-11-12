@@ -47,7 +47,7 @@ const updateCard = async (req, res) => {
     card_number,
     card_holder,
     card_expiration_month,
-    card_expiration_year,
+    card_expiration_year, 
     normalized_name,
     enabled: true,
   })

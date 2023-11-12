@@ -4,23 +4,17 @@ const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
 const { updateImage } = require("../../helpers/updateImage");
 
-const Stalls = require("../../models/Stalls");
 const { storage } = require("../../firebase/firebaseConfig");
+const User = require("../../models/User");
 
 const uploadImage = async (req, res) => {
-    console.log("Upload Image Stall");
+    console.log("Upload Image User");
 
-    let { idStall } = req.params;
-    idStall = parseInt(idStall);
-    if (isNaN(idStall) || !Number.isInteger(idStall) || idStall < 0) {
-        return responseMsg(res, 400, 'Fail', "the idStall should be an integer", {});
-    }
+    let { uuid } = req.params;
     
-    const stall = await Stalls.findOne({where: { id: idStall }})
-    if(!stall){
-        return responseMsg(res, 400, "Fail", "Not valid Stall id", {
-        stall
-        });
+    const user = await User.findOne({where: { uuid }})
+    if(!user){
+        return responseMsg(res, 400, "Fail", "Not valid uuid", {});
     }
 
     const isConnected = await verifyConnection();
@@ -33,15 +27,15 @@ const uploadImage = async (req, res) => {
     }
     const image = req.file;
     const extension = image.mimetype.split('/')[1];
-    const path =  `stalls/${idStall}.${extension}`;
+    const path =  `users/${uuid}.${extension}`;
 
     await updateImage(image,path);
     
     const fileRef = ref(storage, path);
     const imageUrl = await getDownloadURL(fileRef);
     
-    stall.image_url = imageUrl;
-    await stall.save();
+    user.image_url = imageUrl;
+    await user.save();
 
     return responseMsg(res, 200, 'success', "Bravo", {});
 };

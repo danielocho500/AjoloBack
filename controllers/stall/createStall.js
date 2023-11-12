@@ -58,7 +58,7 @@ const createStall = async (req, res) => {
     cost,
     minimun_height_cm,
     enabled: true,
-    image_url: ""
+    image_url: "https://firebasestorage.googleapis.com/v0/b/ajoloferia-1080c.appspot.com/o/stalls%2FDefault.jpg?alt=media&token=2c61a089-d5ad-4441-bae9-d5c1ce7c607a&_gl=1*o7jy8p*_ga*MTk5MzI2ODM4MS4xNjk2NjE3MTkx*_ga_CW55HF8NVT*MTY5OTIwNTY2MS42LjEuMTY5OTIwODEwNC42MC4wLjA."
   });
 
   await Userstalls.create({

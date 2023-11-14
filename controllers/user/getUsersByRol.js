@@ -8,7 +8,7 @@ const { getUsers } = require("../../db/user/getUsers");
 const getUsersByRol = async (req, res) => {
   console.log("Get Users");
 
-  const { id_rol } = req.body;
+  const { id_rol } = req.params;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

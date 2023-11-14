@@ -10,9 +10,8 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const router = Router();
 router.get(
-  "/getByRole",
+  "/getByRole/:id_rol",
   [
-    check("id_rol","You should include the id of the role, between 1-4").notEmpty().isInt({min: 1, max: 4}),
     validateParams,
     validateJWT
   ],

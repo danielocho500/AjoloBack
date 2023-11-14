@@ -3,8 +3,6 @@ const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
 const { getUidByToken } = require("../../jwt/getUidByToken");
 const User = require("../../models/User");
-const { getUsers } = require("../../db/user/getUsers");
-const { where } = require("sequelize");
 
 const getEmployeers = async (req, res) => {
   console.log("Get Employeers");
@@ -29,7 +27,7 @@ const getEmployeers = async (req, res) => {
       });
   }
 
-  const users = User.findAll({
+  const users = await User.findAll({
     where: {
       id_rol: {
         [Op.or]: [3, 4] // Utilizando Sequelize (suponiendo que estás utilizando Sequelize)

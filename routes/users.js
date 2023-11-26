@@ -7,6 +7,7 @@ const { getUsersByRol } = require("../controllers/user/getUsersByRol");
 const { getEmployeers } = require("../controllers/user/getEmployeers")
 const { uploadImage } = require("../controllers/user/uploadImage");
 const { updateUser } = require('../controllers/user/updateUser');
+const { updateUserAdmin } = require('../controllers/user/updateUserAdmin');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -30,6 +31,18 @@ router.put(
   ],
   updateUser
 )
+
+router.put(
+  "/update/:uuid",
+  [
+    check("email", "Include the email"),
+    check("username", "Include the username"),
+    validateParams,
+    validateJWT
+  ],
+  updateUserAdmin
+)
+
 router.get(
   "/employeers",
   [

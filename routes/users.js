@@ -4,6 +4,7 @@ const { validateParams } = require("../helpers/validateParams");
 const { validateJWT } = require("../jwt/validateJWT");
 const { check } = require("express-validator");
 const { getUsersByRol } = require("../controllers/user/getUsersByRol");
+const { getEmployeers } = require("../controllers/user/getEmployeers")
 const { uploadImage } = require("../controllers/user/uploadImage");
 const { updateUser } = require('../controllers/user/updateUser');
 
@@ -29,6 +30,14 @@ router.put(
   ],
   updateUser
 )
+router.get(
+  "/employeers",
+  [
+    validateParams,
+    validateJWT
+  ],
+  getEmployeers
+);
 
 router.post(
   "/image/:uuid",

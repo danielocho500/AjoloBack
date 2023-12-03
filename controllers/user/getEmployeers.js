@@ -32,7 +32,8 @@ const getEmployeers = async (req, res) => {
     where: {
       id_rol: {
         [Op.or]: [3, 4] // Utilizando Sequelize (suponiendo que estás utilizando Sequelize)
-      }
+      },
+      enabled: true
     }
   });
 

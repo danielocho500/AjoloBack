@@ -63,7 +63,7 @@ router.put(
 );
 
 router.delete(
-  "/deleteClient",
+  "/deleteClient/:uuid",
   [
     check("uuid", "You should include a valid email").notEmpty(),
     validateParams,

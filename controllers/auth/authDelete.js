@@ -8,7 +8,7 @@ const { generateJWT } = require("../../jwt/generateJWT");
 
 const authDelete = async (req, res) => {
   console.log("DELETE Method");
-  const { uuid } = req.body;
+  const { uuid } = req.params;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

@@ -12,7 +12,7 @@ const Coupons = sequelize.define("coupons", {
     allowNull: false,
   },
   code_coupon: {
-    type: DataTypes.VARCHAR(20),
+    type: DataTypes.STRING(20),
     allowNull: false,
   },
   minimun_amount: {

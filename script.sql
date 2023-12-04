@@ -81,19 +81,17 @@ CREATE TABLE coupons (
 );
 
 CREATE TABLE shopCoins (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     uuid_client VARCHAR(100) NOT NULL,
     uuid_employeer VARCHAR(100) NOT NULL,
     id_payment_method int NOT NULL,
-    id_credit_card int NOT NULL,
-    id_coupon int NOT NULL,
+    id_coupon int,
     cost double NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (uuid_client) REFERENCES users(uuid),
     FOREIGN KEY (uuid_employeer) REFERENCES users(uuid),
 	FOREIGN KEY (id_payment_method) REFERENCES paymentMethods(id),
-	FOREIGN KEY (id_credit_card) REFERENCES creditCards(id),
 	FOREIGN KEY (id_coupon) REFERENCES coupons(id)
 );
 
@@ -112,7 +110,7 @@ CREATE TABLE stalls (
     id_stall_type int NOT NULL,
     name varchar(100) NOT NULL,
     description varchar(2000) NOT NULL,
-    image_url varchar(MAX) NOT NULL,
+    image_url varchar(5000) NOT NULL,
     cost double NOT NULL,
     minimun_height_cm int,
     enabled bool NOT NULL,
@@ -203,15 +201,15 @@ CREATE TABLE costLessTickets (
     FOREIGN KEY (id_offer) REFERENCES offerStalls(id)
 );
 
-CREATE TABLE buyGets (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    id_offer int NOT NULL,
-    amount_buyed double NOT NULL,
-    amount_Getted double NOT NULL,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_offer) REFERENCES offerStalls(id)
-);
+
+INSERT INTO `ajoloferia`.`paymentmethods` (`normalized_name`) VALUES ('Contado');  # method -> 1
+INSERT INTO `ajoloferia`.`paymentmethods` (`normalized_name`) VALUES ('Crédito');  # method -> 2
+
+INSERT INTO `ajoloferia`.`coupontypes` (`normalized_name`) VALUES ('Descuento del 10%');   # method -> 1
+INSERT INTO `ajoloferia`.`coupontypes` (`normalized_name`) VALUES ('Descuento del 20%'); # method -> 2
+
+INSERT INTO `ajoloferia`.`coupons` (`id_coupon_type`, `code_coupon`, `minimun_amount`, `value_coupon`, `expiration_time`, `uses_per_user`, `total_uses`) VALUES ('1', '3F34F3', '1', '1', '2023-11-29 13:53:17', '1', '1');
+
 
 INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT', NOW(), NOW());
 INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());

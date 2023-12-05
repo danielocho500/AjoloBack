@@ -22,6 +22,7 @@ const validateQr = async (req, res) => {
   if (!user) {
     return responseMsg(res, 401, "fail", "Not user Found", {
       valid: false,
+      
     });
   }
 

@@ -16,7 +16,7 @@ router.get(
 );
 
 router.get(
-  "/validate",
+  "/validate/:code_qr",
   [
     check("code_qr", "You should the code of the qr").notEmpty(),
     validateParams,

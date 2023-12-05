@@ -9,7 +9,7 @@ const Qr = require("../../models/Qrcodes")
 const validateQr = async (req, res) => {
   console.log("GET QR Validate");
 
-  const { code_qr } = req.body;
+  const { code_qr } = req.params;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

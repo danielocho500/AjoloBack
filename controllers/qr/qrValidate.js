@@ -22,11 +22,12 @@ const validateQr = async (req, res) => {
   if (!user) {
     return responseMsg(res, 401, "fail", "Not user Found", {
       valid: false,
-      
+
     });
   }
 
   const qrCode = await Qr.findOne({ where: { code_qr }})
+  const userToReturn = await User.findOne({ where: { uuid: qrCode.uuid }})
 
   if(!qrCode){
     return responseMsg(res, 400, "fail", "Not valid Qr", {
@@ -43,10 +44,10 @@ const validateQr = async (req, res) => {
   return responseMsg(res, 200, 'success', 'ValidQr', {
         valid: true,
         uuid: qrCode.uuid,
-        username: user.user_name,
-        coins: user.coins,
-        image_url: user.image_url,
-        email: user.email
+        username: userToReturn.user_name,
+        coins: userToReturn.coins,
+        image_url: userToReturn.image_url,
+        email: userToReturn.email
   })
 };
 

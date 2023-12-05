@@ -41,7 +41,11 @@ const validateQr = async (req, res) => {
 
   return responseMsg(res, 200, 'success', 'ValidQr', {
         valid: true,
-        uuid: qrCode.uuid
+        uuid: qrCode.uuid,
+        username: user.user_name,
+        coins: user.coins,
+        image_url: user.image_url,
+        email: user.email
   })
 };
 

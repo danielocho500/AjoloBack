@@ -4,7 +4,7 @@ const { sequelize } = require("../db/connection");
 const Reviewstalls = sequelize.define("reviewstalls", {
   id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     primaryKey: true,
   },
   id_stall: {
@@ -12,11 +12,11 @@ const Reviewstalls = sequelize.define("reviewstalls", {
     allowNull: false,
   },
   uuid: {
-    type: DataTypes.VARCHAR(100),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   description: {
-    type: DataTypes.VARCHAR(255),
+    type: DataTypes.STRING(255),
     allowNull: false,
   },
   points: {
@@ -24,12 +24,8 @@ const Reviewstalls = sequelize.define("reviewstalls", {
     allowNull: false,
   },
   image_url: {
-    type: DataTypes.VARCHAR(255),
-    allowNull: false,
-  },
-  enabled: {
-    type: DataTypes.TINYINT(1),
-    allowNull: false,
+    type: DataTypes.STRING(255),
+    allowNull: true,
   },
   createdAt: {
     type: DataTypes.DATE,

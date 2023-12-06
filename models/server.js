@@ -16,6 +16,7 @@ class Server {
         this.stallPath = '/api/stalls'
         this.paymentPath = '/api/payment'
         this.shoppingsPath = '/api/shoppings'
+        this.reviewsPath = '/api/reviews'
 
         this.middlewares();
 
@@ -36,6 +37,7 @@ class Server {
         this.app.use(this.stallPath, require('../routes/stall'));
         this.app.use(this.paymentPath, require('../routes/payment'));
         this.app.use(this.shoppingsPath, require('../routes/shopcoins'));
+        this.app.use(this.reviewsPath, require('../routes/reviews'));
     }
 
     listen() {

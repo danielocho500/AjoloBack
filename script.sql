@@ -154,7 +154,7 @@ CREATE TABLE userStalls (
 );
 
 CREATE TABLE reviewStalls (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     id_stall int NOT NULL,
     uuid VARCHAR(100) NOT NULL,
     description varchar(255) NOT NULL,

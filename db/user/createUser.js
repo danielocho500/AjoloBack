@@ -6,8 +6,6 @@ const createUser = async (password, email, username, rol) => {
   const hashedPass = await encryptString(password);
   const uuid = await generateUID();
 
-  console.log("asdsadsa");
-
   const user = await User.create({
     uuid: uuid,
     id_rol: rol,

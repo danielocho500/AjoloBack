@@ -72,9 +72,9 @@ CREATE TABLE coupons (
     code_coupon varchar(20) NOT NULL,
     minimun_amount double,
     value_coupon double NOT NULL,
-    expiration_time TIMESTAMP NOT NULL,
     uses_per_user int NOT NULL,
     total_uses int NOT NULL,
+    enabled bool NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (id_coupon_type) REFERENCES couponTypes(id)

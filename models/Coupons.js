@@ -4,8 +4,8 @@ const { sequelize } = require("../db/connection");
 const Coupons = sequelize.define("coupons", {
   id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
     primaryKey: true,
+    autoIncrement: true,
   },
   id_coupon_type: {
     type: DataTypes.INTEGER,
@@ -23,10 +23,6 @@ const Coupons = sequelize.define("coupons", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
-  expiration_time: {
-    type: DataTypes.DATE,
-    allowNull: false,
-  },
   uses_per_user: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -35,6 +31,10 @@ const Coupons = sequelize.define("coupons", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  enabled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false
+  }, 
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,

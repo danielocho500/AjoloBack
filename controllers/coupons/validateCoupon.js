@@ -36,7 +36,8 @@ const validateCoupon = async (req, res) => {
         valid: true,
         id_coupon_type: (coupon.id_coupon_type == 1) ? "Discount" : "Percentage",
         minimun_amount: (coupon.minimun_amount > 0) ? coupon.minimun_amount : 0,
-        value_coupon: coupon.value_coupon
+        value_coupon: coupon.value_coupon,
+        id_coupon: coupon.id
     })
 }
 

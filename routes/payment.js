@@ -16,7 +16,6 @@ router.post(
     check("card_holder", "put a valid name").notEmpty(),
     check("card_expiration_month", "put a valid month, between 1-12").notEmpty().isInt({min: 1, max: 12}),
     check("card_expiration_year", "put a valid year").notEmpty().isInt({min: 2023, max: 2040}),
-    check("normalized_name", "put a valid cardName").notEmpty(),
     validateParams,
     validateJWT
   ],

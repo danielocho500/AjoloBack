@@ -5,8 +5,8 @@ const { check } = require("express-validator");
 const {
   getShoppingsByIdClient,
 } = require("../controllers/ajolocoins/getShoppings");
-const { shopCoins } = require("../controllers/ajolocoins/shopCoins");
-
+const {shopCoinsCash } = require("../controllers/ajolocoins/shopCoinsCash");
+const { shopCoinsCard } = require("../controllers/ajolocoins/shopCoinsCard");
 const router = Router();
 router.get(
   "/getShoppings/:id_client",
@@ -14,6 +14,24 @@ router.get(
   getShoppingsByIdClient
 );
 
-router.post("/add", [validateParams, validateJWT], shopCoins);
+router.post("/cash", 
+  [
+    check("uuidClient", "the uuidClient is required").notEmpty(),
+    check("idCoupon", "the idCoupon is required"),
+    check("cost", "the cost is required").notEmpty(),
+    check("coins", "the coins is required").notEmpty(),
+    validateParams, 
+    validateJWT], 
+  shopCoinsCash);
+
+router.post("/card",
+  [
+    check("idCoupon", "the idCoupon is required"),
+    check("cost", "the cost is required").notEmpty(),
+    check("coins", "the coins is required").notEmpty(),
+    validateParams, 
+    validateJWT
+  ],
+  shopCoinsCard);
 
 module.exports = router;

@@ -5,10 +5,10 @@ const { getUidByToken } = require("../../jwt/getUidByToken");
 const Shop = require("../../models/Shopcoins");
 const User = require("../../models/User");
 const Coupon = require("../../models/Coupons");
-const { createShop } = require("../../db/shopcoins/createShop");
+const { createShopCash } = require("../../db/shopcoins/createShopCash");
 const { updateCoins } = require("../../db/user/updateCoins");
 
-const shopCoins = async (req, res) => {
+const shopCoinsCash = async (req, res) => {
   console.log("Shop coins");
 
   const {
@@ -23,6 +23,13 @@ const shopCoins = async (req, res) => {
   }
 
   const uuidEmployer = getUidByToken(req.headers.authtoken);
+
+  const employer = await User.findOne({ where: { uuid: uuidEmployer } });
+  if (!employer) {
+    return responseMsg(res, 401, "fail", "employer not found", {
+      isCorrect: false,
+    });
+  }
 
   const client = await User.findOne({ where: { uuid: uuidClient } });
   if (!client) {
@@ -39,21 +46,17 @@ const shopCoins = async (req, res) => {
     }
   }
 
-  const employer = await User.findOne({ where: { uuid: uuidEmployer } });
-  if (!employer) {
-    return responseMsg(res, 401, "fail", "employer not found", {
-      isCorrect: false,
-    });
+  if(idCoupon){
+    const coupon = await Coupon.findOne({ where: { id: idCoupon } });
+    if (!coupon) {
+      return responseMsg(res, 401, "fail", "Coupon not found", {
+        isCorrect: false,
+      });
   }
-
-  const coupon = await Coupon.findOne({ where: { id: idCoupon } });
-  if (!coupon) {
-    return responseMsg(res, 401, "fail", "Coupon not found", {
-      isCorrect: false,
-    });
   }
+  
 
-  const shop = await createShop(uuidClient, uuidEmployer, idCoupon, cost);
+  const shop = await createShopCash(uuidClient, uuidEmployer, cost, idCoupon);
   if (!shop) {
     return responseMsg(res, 401, "fail", "The shopping couldn't be completed", {
       edited: false,
@@ -61,11 +64,9 @@ const shopCoins = async (req, res) => {
   }
 
 
-  //await shop.save();
-
   return responseMsg(res, 200, 'success', 'Shopping saved', shop)
 };
 
 module.exports = {
-  shopCoins,
+  shopCoinsCash,
 };

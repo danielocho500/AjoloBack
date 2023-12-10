@@ -8,7 +8,7 @@ const Card = require("../../models/Creditcards")
 const updateCard = async (req, res) => {
   console.log("Post update Card");
 
-  const {card_number, card_holder, card_expiration_month, card_expiration_year, normalized_name} = req.body;
+  const {card_number, card_holder, card_expiration_month, card_expiration_year, normalized_name = "ola"} = req.body;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

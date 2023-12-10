@@ -1,11 +1,11 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Shopcoins = sequelize.define("shopcoins", {
+const Shopcoins = sequelize.define("shopCoins", {
   id: {
     type: DataTypes.INTEGER,
-    allowNull: true,
     primaryKey: true,
+    autoIncrement: true,
   },
   uuid_client: {
     type: DataTypes.STRING(100),
@@ -13,7 +13,7 @@ const Shopcoins = sequelize.define("shopcoins", {
   },
   uuid_employeer: {
     type: DataTypes.STRING(100),
-    allowNull: false,
+    allowNull: true,
   },
   id_payment_method: {
     type: DataTypes.INTEGER,
@@ -21,7 +21,11 @@ const Shopcoins = sequelize.define("shopcoins", {
   },
   id_coupon: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
+  },
+  id_credit_card:{
+    type: DataTypes.INTEGER,
+    allowNull: true
   },
   cost: {
     type: DataTypes.FLOAT,

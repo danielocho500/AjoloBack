@@ -14,8 +14,9 @@ const shopCoinsCash = async (req, res) => {
   const {
     uuidClient,
     idCoupon,
-    cost,
-    coins } = req.body;
+    cost} = req.body;
+
+    const coins = cost / 10;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

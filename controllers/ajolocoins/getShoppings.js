@@ -4,6 +4,7 @@ const { responseServerError } = require("../../helpers/responseServerError");
 const { getUidByToken } = require("../../jwt/getUidByToken");
 const User = require("../../models/User");
 const { getShoppings } = require("../../db/shopcoins/getShoppings");
+const Coupons = require("../../models/Coupons");
 
 const getShoppingsByIdClient = async (req, res) => {
   console.log("Get shoppings");
@@ -26,8 +27,27 @@ const getShoppingsByIdClient = async (req, res) => {
 
   const shoppings = await getShoppings(id_client);
 
+  const couponNames = await Promise.all(
+    shoppings.map(async (shopping) => {
+      if (shopping.id_coupon) {
+        const coupon = await Coupons.findOne({ where: { id: shopping.id_coupon } });
+        return coupon ? coupon.code_coupon : "N/A";
+      } else {
+        return "N/A";
+      }
+    })
+  );
+
+  // Combina los datos de compras con los nombres de los cupones
+  const shoppingsWithCouponNames = shoppings.map((shopping, index) => ({
+    payment_method: shopping.id_payment_method,
+    cost: shopping.cost,
+    coins: shopping.cost / 10 ,
+    couponName: couponNames[index],
+  }));
+
   return responseMsg(res, 200, "success", "Shoppings obtained", {
-    shoppings,
+    shoppings: shoppingsWithCouponNames,
   });
 };
 

@@ -19,7 +19,6 @@ router.post("/cash",
     check("uuidClient", "the uuidClient is required").notEmpty(),
     check("idCoupon", "the idCoupon is required"),
     check("cost", "the cost is required").notEmpty(),
-    check("coins", "the coins is required").notEmpty(),
     validateParams, 
     validateJWT], 
   shopCoinsCash);
@@ -28,7 +27,6 @@ router.post("/card",
   [
     check("idCoupon", "the idCoupon is required"),
     check("cost", "the cost is required").notEmpty(),
-    check("coins", "the coins is required").notEmpty(),
     validateParams, 
     validateJWT
   ],

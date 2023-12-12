@@ -38,12 +38,12 @@ const getShoppingsByIdClient = async (req, res) => {
     })
   );
 
-  // Combina los datos de compras con los nombres de los cupones
   const shoppingsWithCouponNames = shoppings.map((shopping, index) => ({
     payment_method: shopping.id_payment_method,
     cost: shopping.cost,
     coins: shopping.cost / 10 ,
     couponName: couponNames[index],
+    createdAt: shopping.createdAt
   }));
 
   return responseMsg(res, 200, "success", "Shoppings obtained", {

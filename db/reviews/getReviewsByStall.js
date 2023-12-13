@@ -15,7 +15,6 @@ const getReviewsByStall = async (idStall) => {
           id_stall: r.id_stall,
           description: r.description,
           points: r.points,
-          image_utl: r.image_url,
           createdAt: r.createdAt,
           updatedAt: r.updatedAt,
           publisher: user

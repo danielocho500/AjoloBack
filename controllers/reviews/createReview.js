@@ -9,7 +9,7 @@ const { createReview } = require("../../db/reviews/createReview");
 const publishReview = async (req, res) => {
   console.log("Post review");
 
-  const { idStall, description, points, imageUrl } = req.body;
+  const { idStall, description, points } = req.body;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {
@@ -37,10 +37,10 @@ const publishReview = async (req, res) => {
     uuidClient,
     description,
     points,
-    imageUrl
+    enabled = true
   );
 
-  return responseMsg(res, 201, "Success", "Stall Created", {
+  return responseMsg(res, 201, "Success", "Review Created", {
     created: true,
     review
   });

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Reviewstalls = sequelize.define("reviewstalls", {
+const Reviewstalls = sequelize.define("reviewStalls", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: true,
@@ -26,6 +26,10 @@ const Reviewstalls = sequelize.define("reviewstalls", {
   image_url: {
     type: DataTypes.STRING(255),
     allowNull: true,
+  },
+  enabled: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
   },
   createdAt: {
     type: DataTypes.DATE,

@@ -33,8 +33,6 @@ const updateStalls = async (req, res) => {
     });
   }
 
-  description, cost, uuid_employeer
-
   if(name)
     stall.name = name;
 
@@ -66,9 +64,6 @@ const updateStalls = async (req, res) => {
   return responseMsg(res, 200, 'success', 'Stall updated', {
     stall
   })
-
-
-    
 };
 
 module.exports = {

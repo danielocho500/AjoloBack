@@ -9,6 +9,7 @@ const { getStalls } = require("../controllers/stall/getStalls");
 const { getStall } = require("../controllers/stall/getStall");
 const { uploadImage } = require("../controllers/stall/uploadImage");
 const { updateStalls } = require('../controllers/stall/updateStall');
+const { deleteStall } = require('../controllers/stall/deleteStall');
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -73,6 +74,15 @@ router.put(
     validateJWT
   ],
   updateStalls
+)
+
+router.delete(
+  "/delete/:idStall",
+  [
+    validateParams,
+    validateJWT
+  ],
+  deleteStall
 )
 
 module.exports = router;

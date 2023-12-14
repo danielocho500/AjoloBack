@@ -1,6 +1,6 @@
 const Events = require("../../models/Events");
 
-const createEvent = async (uuid, name, cost, dateEvent, location) => {
+const createEvent = async (uuid, name, cost, dateEvent, location, timeEvent) => {
 
   const event = await Events.create({
     uuid: uuid,
@@ -8,6 +8,7 @@ const createEvent = async (uuid, name, cost, dateEvent, location) => {
     cost: cost,
     dateEvent: dateEvent,
     location: location,
+    timeEvent,
     createdAt: new Date().getTime(),
     updatedAt: new Date().getTime()
   });

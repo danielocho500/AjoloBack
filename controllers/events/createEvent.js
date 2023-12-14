@@ -10,7 +10,7 @@ const { createEvent } = require("../../db/events/createEvent");
 const createEventService = async (req, res) => {
   console.log("Post event");
 
-  const { name, cost, dateEvent, location } = req.body;
+  const { name, cost, dateEvent, location, timeEvent } = req.body;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {
@@ -32,7 +32,7 @@ const createEventService = async (req, res) => {
     });
   }
 
-  const event = await createEvent(uuid, name, cost, dateEvent, location);
+  const event = await createEvent(uuid, name, cost, dateEvent, location, timeEvent);
 
   return responseMsg(res, 201, "Success", "Event Created", {
     event,

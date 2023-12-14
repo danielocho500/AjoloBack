@@ -36,7 +36,7 @@ const User = sequelize.define("user", {
     allowNull: false,
   },
   id_rol: {
-    type: DataTypes.STRING(50),
+    type: DataTypes.INTEGER,
     allowNull: false,
   },
   createdAt: {

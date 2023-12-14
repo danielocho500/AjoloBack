@@ -1,9 +1,11 @@
+const { getAverage } = require("../../helpers/getAveragePoints");
 const Stalls = require("../../models/Stalls")
 const UserStalls = require("../../models/Userstalls")
 
 const getStallsInfo = async (user, query) => {
 
     const { id_rol, uuid } = user;
+
 
     const stalls = []
     if(id_rol == 4){
@@ -16,7 +18,9 @@ const getStallsInfo = async (user, query) => {
     else{
       const stallsFound = await Stalls.findAll({where: {enabled: 1}});
       for(const sf of stallsFound){
+        sf.dataValues.points = await getAverage(sf.id);
         stalls.push(sf.dataValues)
+        
       }
     }
     

@@ -27,7 +27,7 @@ const findEventsByDateService = async (req, res) => {
     });
   }
 
-  if (user.id_rol != 1) {
+  if (user.id_rol == 1) {
     return responseMsg(res, 401, "fail", "Not authorized to create Stalls", {
       logged: false,
     });

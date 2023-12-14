@@ -4,7 +4,7 @@ const { sequelize } = require("../db/connection");
 const Events = sequelize.define("events", {
   id: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
     primaryKey: true,
   },
   uuid: {

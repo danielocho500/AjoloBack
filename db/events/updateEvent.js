@@ -6,7 +6,8 @@ const updateEvent = async (
   name,
   cost,
   dateEvent,
-  location
+  location,
+  timeEvent
 ) => {
   const event = await Event.update(
     {
@@ -15,6 +16,7 @@ const updateEvent = async (
       cost: cost,
       dateEvent: dateEvent,
       location: location,
+      timeEvent,
       updatedAt: new Date().getTime(),
     },
     {

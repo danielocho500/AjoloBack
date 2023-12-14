@@ -8,7 +8,7 @@ const { updateEvent } = require("../../db/events/updateEvent");
 const updateEventService = async (req, res) => {
   console.log("Put event");
 
-  const { name, cost, dateEvent, location } = req.body;
+  const { name, cost, dateEvent, location, timeEvent } = req.body;
 
   const {id} = req.params;
 
@@ -32,7 +32,7 @@ const updateEventService = async (req, res) => {
     });
   }
 
-  const event = await updateEvent(id, uuid, name, cost, dateEvent, location);
+  const event = await updateEvent(id, uuid, name, cost, dateEvent, location, timeEvent);
 
   return responseMsg(res, 201, "Success", "Event updated", {
     event,

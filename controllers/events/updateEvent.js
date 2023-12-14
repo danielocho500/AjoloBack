@@ -8,7 +8,9 @@ const { updateEvent } = require("../../db/events/updateEvent");
 const updateEventService = async (req, res) => {
   console.log("Put event");
 
-  const { id, name, cost, dateEvent, location } = req.body;
+  const { name, cost, dateEvent, location } = req.body;
+
+  const {id} = req.params;
 
   const isConnected = await verifyConnection();
   if (!isConnected) {

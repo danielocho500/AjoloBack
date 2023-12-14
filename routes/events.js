@@ -22,7 +22,7 @@ router.post(
 );
 
 router.put(
-  "/update",
+  "/update/:id",
   [validateParams, validateJWT],
   updateEventService
 );

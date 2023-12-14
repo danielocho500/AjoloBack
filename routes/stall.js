@@ -8,6 +8,7 @@ const { createStall } = require("../controllers/stall/createStall");
 const { getStalls } = require("../controllers/stall/getStalls");
 const { getStall } = require("../controllers/stall/getStall");
 const { uploadImage } = require("../controllers/stall/uploadImage");
+const { updateStalls } = require('../controllers/stall/updateStall');
 
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -64,5 +65,14 @@ router.post(
   ],
   uploadImage
 );
+
+router.put(
+  "/update/:idStall",
+  [
+    validateParams,
+    validateJWT
+  ],
+  updateStalls
+)
 
 module.exports = router;

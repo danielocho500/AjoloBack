@@ -1,26 +1,30 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../db/connection");
 
-const Tickets = sequelize.define("tickets", {
+const Events = sequelize.define("events", {
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
     primaryKey: true,
   },
-  uuid_client: {
-    type: DataTypes.VARCHAR(100),
+  uuid: {
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
-  uuid_employeer: {
-    type: DataTypes.VARCHAR(100),
+  name: {
+    type: DataTypes.STRING(255),
     allowNull: false,
   },
   cost: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DOUBLE,
     allowNull: false,
   },
-  type: {
-    type: DataTypes.STRING(100),
+  dateEvent: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  location: {
+    type: DataTypes.STRING(255),
     allowNull: false,
   },
   createdAt: {
@@ -33,4 +37,4 @@ const Tickets = sequelize.define("tickets", {
   },
 });
 
-module.exports = Tickets;
+module.exports = Events;

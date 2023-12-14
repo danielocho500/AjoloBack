@@ -23,10 +23,6 @@ const Shopcoins = sequelize.define("shopCoins", {
     type: DataTypes.INTEGER,
     allowNull: true,
   },
-  id_credit_card:{
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
   cost: {
     type: DataTypes.FLOAT,
     allowNull: false,

@@ -9,8 +9,6 @@ const Coupons = require("../../models/Coupons");
 const getShoppingsByIdClient = async (req, res) => {
   console.log("Get shoppings");
 
-  const { id_client } = req.params;
-
   const isConnected = await verifyConnection();
   if (!isConnected) {
     return responseServerError(res);
@@ -25,7 +23,8 @@ const getShoppingsByIdClient = async (req, res) => {
     });
   }
 
-  const shoppings = await getShoppings(id_client);
+  const shoppings = await getShoppings(uuid);
+  console.log(shoppings);
 
   const couponNames = await Promise.all(
     shoppings.map(async (shopping) => {

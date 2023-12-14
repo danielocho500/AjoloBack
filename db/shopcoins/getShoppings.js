@@ -1,6 +1,7 @@
 const Shop = require("../../models/Shopcoins");
 
 const getShoppings = async (id_client) => {
+  console.log(id_client);
   try {
     const shoppings = await Shop.findAll({
       where: { uuid_client: id_client },
@@ -13,7 +14,7 @@ const getShoppings = async (id_client) => {
       return [];
     }
   } catch (error) {
-    throw "error";
+    throw error;
   }
 };
 

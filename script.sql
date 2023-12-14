@@ -2,6 +2,14 @@ DROP DATABASE IF EXISTS ajoloferia;
 CREATE DATABASE ajoloferia;
 USE ajoloferia;
 
+
+CREATE TABLE paymentMethods (
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    normalized_name VARCHAR(100) NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     normalized_name VARCHAR(100) NOT NULL,
@@ -23,12 +31,6 @@ CREATE TABLE weekDays (
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE paymentMethods (
-    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    normalized_name VARCHAR(100) NOT NULL,
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 CREATE TABLE users (
     uuid VARCHAR(100) PRIMARY KEY NOT NULL,
@@ -119,7 +121,7 @@ CREATE TABLE stalls (
     FOREIGN KEY (id_stall_type) REFERENCES stallTypes(id)
 );
 
-CREATE TABLE schedubles (
+CREATE TABLE schedules (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     id_stall int NOT NULL,
     id_week_day int NOT NULL,
@@ -153,6 +155,18 @@ CREATE TABLE userStalls (
     FOREIGN KEY (uuid) REFERENCES users(uuid)
 );
 
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    uuid VARCHAR(100) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    cost double NOT NULL,
+    dateEvent TIMESTAMP NOT NULL,
+    location  VARCHAR(255) NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (uuid) REFERENCES users(uuid)
+);
+
 CREATE TABLE reviewStalls (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_stall int NOT NULL,
@@ -172,6 +186,7 @@ CREATE TABLE tickets (
     uuid_client VARCHAR(100) NOT NULL,
     uuid_employeer VARCHAR(100) NOT NULL,
     cost int NOT NULL,
+    type VARCHAR(100) NOT NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (uuid_client) REFERENCES users(uuid),
@@ -201,15 +216,11 @@ CREATE TABLE costLessTickets (
     FOREIGN KEY (id_offer) REFERENCES offerStalls(id)
 );
 
-
-INSERT INTO `ajoloferia`.`paymentmethods` (`normalized_name`) VALUES ('Contado');  # method -> 1
-INSERT INTO `ajoloferia`.`paymentmethods` (`normalized_name`) VALUES ('Crédito');  # method -> 2
+INSERT INTO `ajoloferia`.`paymentMethods` (`normalized_name`) VALUES ('Contado');  # method -> 1
+INSERT INTO `ajoloferia`.`paymentMethods` (`normalized_name`) VALUES ('Crédito');  # method -> 2
 
 INSERT INTO `ajoloferia`.`coupontypes` (`normalized_name`) VALUES ('Descuento del 10%');   # method -> 1
 INSERT INTO `ajoloferia`.`coupontypes` (`normalized_name`) VALUES ('Descuento del 20%'); # method -> 2
-
-INSERT INTO `ajoloferia`.`coupons` (`id_coupon_type`, `code_coupon`, `minimun_amount`, `value_coupon`, `expiration_time`, `uses_per_user`, `total_uses`) VALUES ('1', '3F34F3', '1', '1', '2023-11-29 13:53:17', '1', '1');
-
 
 INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (1, 'CLIENT', NOW(), NOW());
 INSERT INTO roles (id, normalized_name, createdAt, updatedAt) VALUES (2, 'ADMIN', NOW(), NOW());

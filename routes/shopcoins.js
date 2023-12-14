@@ -9,7 +9,7 @@ const {shopCoinsCash } = require("../controllers/ajolocoins/shopCoinsCash");
 const { shopCoinsCard } = require("../controllers/ajolocoins/shopCoinsCard");
 const router = Router();
 router.get(
-  "/getShoppings/:id_client",
+  "/getShoppings",
   [validateParams, validateJWT],
   getShoppingsByIdClient
 );

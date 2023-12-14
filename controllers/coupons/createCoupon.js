@@ -47,7 +47,9 @@ const createCoupon = async (req, res) => {
         enabled: true
     })
 
-    return responseMsg(res, 201, "success", "Coupon Added", {})
+    return responseMsg(res, 201, "success", "Coupon Added", {
+        registered: true,
+    })
 }
 
 module.exports = {

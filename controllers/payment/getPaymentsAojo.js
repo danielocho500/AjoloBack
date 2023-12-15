@@ -3,10 +3,12 @@ const { responseMsg } = require("../../helpers/responseMsg");
 const { responseServerError } = require("../../helpers/responseServerError");
 const { getUidByToken } = require("../../jwt/getUidByToken");
 const User = require("../../models/User");
-const { getShoppings } = require("../../db/shopcoins/getShoppings");
+const { getPayment } = require("../../db/aojopay/getPayments");
 const Coupons = require("../../models/Coupons");
+const Userstalls = require("../../models/Userstalls");
+const { list } = require("firebase/storage");
 
-const getShoppingsByIdClient = async (req, res) => {
+const getPaymentesByIdClient = async (req, res) => {
   console.log("Get shoppings");
 
   const isConnected = await verifyConnection();
@@ -23,33 +25,28 @@ const getShoppingsByIdClient = async (req, res) => {
     });
   }
 
-  const shoppings = await getShoppings(uuid);
+  const list = [];
+
+  const shoppings = await getPayment(uuid);
   console.log(shoppings);
 
-  const couponNames = await Promise.all(
-    shoppings.map(async (shopping) => {
-      if (shopping.id_coupon) {
-        const coupon = await Coupons.findOne({ where: { id: shopping.id_coupon } });
-        return coupon ? coupon.code_coupon : "N/A";
-      } else {
-        return "N/A";
+  if (shoppings) {
+    for (element in shoppings) {
+      const stall = Userstalls.findOne({
+        where: { uuid: element.uuid_employeer },
+      });
+      console.log(stall);
+      if (stall) {
+        list.push({ shop: element, stall: stall });
       }
-    })
-  );
-
-  const shoppingsWithCouponNames = shoppings.map((shopping, index) => ({
-    payment_method: shopping.id_payment_method,
-    cost: shopping.cost,
-    coins: shopping.cost / 10 ,
-    couponName: couponNames[index],
-    createdAt: shopping.createdAt
-  }));
+    }
+  }
 
   return responseMsg(res, 200, "success", "Shoppings obtained", {
-    shoppings: shoppingsWithCouponNames,
+    shoppings: list,
   });
 };
 
 module.exports = {
-  getShoppingsByIdClient,
+  getPaymentesByIdClient,
 };

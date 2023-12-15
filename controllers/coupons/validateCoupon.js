@@ -7,7 +7,7 @@ const Coupons = require("../../models/Coupons");
 const validateCoupon = async (req, res) => {
     console.log("Post Coupon");
 
-    const {code, uuid} = req.params;
+    const {code} = req.params;
 
     const uuidUser = await getUidByToken(req.headers.authtoken)
     const role = await getRoleByUuid(uuidUser);

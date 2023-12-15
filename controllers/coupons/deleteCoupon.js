@@ -37,7 +37,9 @@ const deleteCoupon = async (req, res) => {
         }
     );
 
-    return responseMsg(res, 201, "success", "Coupon deleted", {})
+    return responseMsg(res, 201, "success", "Coupon deleted", {
+        deleted: true
+    })
 }
 
 module.exports = {

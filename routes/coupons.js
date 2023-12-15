@@ -44,6 +44,16 @@ router.get(
     validateCoupon
 )
 
+router.get(
+    "/validate/:code",
+    [
+        check("code", "code is required").notEmpty(),
+        validateParams,
+        validateJWT
+    ],
+    validateCoupon
+)
+
 router.delete(
     "/delete/:id",
     [

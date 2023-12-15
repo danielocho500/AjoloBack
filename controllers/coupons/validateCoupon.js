@@ -5,9 +5,10 @@ const { getUidByToken } = require("../../jwt/getUidByToken");
 const Coupons = require("../../models/Coupons");
 
 const validateCoupon = async (req, res) => {
-    console.log("Post Coupon");
+    console.log("Validate Coupon");
 
     const {code} = req.params;
+    console.log(code)
 
     const uuidUser = await getUidByToken(req.headers.authtoken)
     const role = await getRoleByUuid(uuidUser);
